@@ -5,7 +5,7 @@
 
 ## Установка
 
-zsh```
+```zsh
 git clone https://github.com/saniqP/pythonBuilder.git
 cd PythonBuilder
 chmod +x install.sh
