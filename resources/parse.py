@@ -1,20 +1,15 @@
 import json
+import os
 
-def parse_build(path):
-    with open(path, "r") as f:
-        build = json.load(f)
+def parser(path):
 
-        libraries = []
+    if os.path.exists(path):
+        with open(path, "r") as f:
+            build_file = json.load(f)
 
-        other_data = {}
+            return build_file
 
-        for lib, in_project in build["libraries"].items():
-            if in_project:
-                libraries.append(lib)
-
-        other_data["venv_name"] = build["venv_name"]
-        other_data["main"] = build["main"]
-
-    return libraries, other_data
+    else:
+        return False
 
 
