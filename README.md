@@ -19,6 +19,7 @@ chmod +x install.sh
 
 В корне вашего проекта создайте файл `pythonBuild.jsonc`:
 
+```jsonc
 {
   "venv_name": ".venv",           // Имя виртуального окружения
   
@@ -43,3 +44,4 @@ chmod +x install.sh
     "main_file": "src/main.py"    // Главный файл вашего проекта
   }
 }
+```
