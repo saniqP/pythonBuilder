@@ -1,41 +1,68 @@
-from resources.parse import parser
+from resources.reader import reader
+from resources.functions import *
 import os
-import subprocess
 
-build = parser("pythonBuild.jsonc")
+def icons_and_colors():
 
-if build == False:
-    print("Build failed")
+    return {
+        "colors": {
+            "RED": "\033[91m",
+            "GREEN": "\033[92m",
+            "YELLOW": "\033[93m",
+            "BLUE": "\033[94m",
+            "MAGENTA": "\033[95m",
+            "CYAN": "\033[96m",
+            "WHITE": "\033[97m",
+            "RESET": "\033[0m",
+            "BOLD": "\033[1m"
+        },
+
+        "icons": {
+            "ROCKET": '異',
+            "CHECK": '',
+            "CROSS": '',
+            "WARNING": '',
+            "FOLDER": '',
+            "BOOK": '',
+            "GEAR": '',
+            "SNAKE": '󱔎',
+            "PACKAGE": '',
+            "HAMMER": '',
+            "PARTY": '',
+            "HOURGLASS": '',
+            "TERMINAL": '',
+            "CODE": '',
+            "PLAY": '',
+            "SERVER": ''
+        }
+    }
+
+config = reader("pythonBuild.jsonc")
+
+if config is not None:
+
+    styles = icons_and_colors()
+
+    def main():
+        print(f"{styles["colors"]["CYAN"]}{styles["icons"]["ROCKET"]}{styles["colors"]["RESET"]} Building project\n\n")
+
+
+        create_venv(config, styles)
+
+        load_libs(config, styles)
+
+        create_default_folders(config, styles)
+
+        create_start_file(config, styles)
+
+
+
+    if __name__ == "__main__":
+        main()
+
+
 else:
-    try:
-
-        print("Parsing pythonBuild")
-
-        if build["venv_name"] in os.listdir():
-            for lib_key, lib_value in build["libraries"].items():
-                if lib_value:
-                    os.system(f"{build['venv_name']}/bin/python3 -m pip install {lib_key}")
-        else:
-            os.system(f"python3 -m venv {build['venv_name']}")
-
-            for lib_key, lib_value in build["libraries"].items():
-                if lib_value:
-                    os.system(f"{build['venv_name']}/bin/python3 -m pip install {lib_key}")
-
-            path = subprocess.run("pwd", capture_output=True, text=True)
-
-            with open("start", "w") as file:
-                file.write(f"""
-                #!/bin/bash
-                cd {path.stdout.strip()}
-                source .venv/bin/activate
-                python3 {build["main"]}
-                """)
-
-
-    except Exception as e:
-        print("Error parsing build.jsonc")
-
+    print("No found pythonBuild.jsonc")
 
 
 
