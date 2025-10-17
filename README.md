@@ -39,7 +39,7 @@ chmod +x install.sh
   "python3.14": {   // для создания виртуального окружения с python3.14(добавленны t строки)
     "enable": true,
     "package_manager": "paru"
-  }
+  },
   
   "default_folders": {            // Автоматическое создание структуры папок
     "enable": true,
